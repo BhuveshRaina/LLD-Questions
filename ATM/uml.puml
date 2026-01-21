@@ -1,0 +1,36 @@
+@startuml
+
+interface ATMState {
+    + void insertCard(ATM atm, Card card)
+    + void authenticatePin(ATM atm, int pin)
+    + void withdrawCash(ATM atm, int amount)
+    + void ejectCard(ATM atm)
+}
+
+class ATM {
+    - ATMState currentState
+    - int atmCash
+    - Card* currentCard
+    + void setState(ATMState s)
+    + void setCard(Card* c)
+    + int getAtmCash()
+    + void deductAtmCash(int amt)
+}
+
+class Card {
+    - int pin
+    - int accountBalance
+    - int withdrawalLimit
+    + bool validatePin(int p)
+    + bool canWithdraw(int amt)
+    + void deductBalance(int amt)
+}
+
+ATMState <|.. IdleState
+ATMState <|.. HasCardState
+ATMState <|.. PinEnteredState
+
+ATM "1" *-- "1" ATMState
+ATM "1" o-- "0..1" Card : processes >
+
+@enduml
