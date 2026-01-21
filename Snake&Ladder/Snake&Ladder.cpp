@@ -172,8 +172,8 @@ int main() {
     Player* p2 = new Player("Bob");
 
     // 3. Initialize and Start Game
-    SnakeLadderGame game(board, dice, {p1, p2});
-    game.start();
+    SnakeLadderGame *game = new SnakeLadderGame(board, dice, {p1, p2});
+    game->start();
 
     return 0;
 }

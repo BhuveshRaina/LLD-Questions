@@ -1,0 +1,48 @@
+@startuml
+
+enum PieceType {
+    X
+    O
+    EMPTY
+}
+
+class Player {
+    - string name
+    - PieceType piece
+    + Player(string name, PieceType piece)
+    + string getName()
+    + PieceType getPiece()
+}
+
+class Board {
+    - int size
+    - PieceType[][] grid
+    + Board(int size)
+    + bool isCellEmpty(int r, int c)
+    + void setPiece(int r, int c, PieceType p)
+    + PieceType getPiece(int r, int c)
+    + int getSize()
+}
+
+interface WinningStrategy {
+    + bool checkWinner(Board board, int row, int col, PieceType p)
+}
+
+class StandardWinningStrategy {
+    + bool checkWinner(Board board, int row, int col, PieceType p)
+}
+
+class Game {
+    - Board board
+    - Deque<Player> players
+    - WinningStrategy strategy
+    + Game(int size, List<Player> players)
+    + void play()
+}
+
+Game *-- Board
+Game *-- Player
+Game o-- WinningStrategy
+StandardWinningStrategy ..|> WinningStrategy
+
+@enduml

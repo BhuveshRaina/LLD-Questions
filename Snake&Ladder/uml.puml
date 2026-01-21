@@ -1,0 +1,63 @@
+@startuml
+
+interface IJumper {
+    + int getEnd()
+}
+
+class Snake implements IJumper {
+    - int start
+    - int end
+    + int getEnd()
+}
+
+class Ladder implements IJumper {
+    - int start
+    - int end
+    + int getEnd()
+}
+
+class Cell {
+    - IJumper jumper
+    + void setJumper(IJumper j)
+    + int applyJumper(int currentPos)
+}
+
+class Board {
+    - int size
+    - vector<Cell*> cells
+    + Board(int size)
+    + int resolvePosition(int pos)
+}
+
+interface IDice {
+    + int roll()
+}
+
+class StandardDice implements IDice {
+    - int count
+    + int roll()
+}
+
+class Player {
+    - string name
+    - int position
+    + string getName()
+    + int getPosition()
+    + void setPosition(int p)
+}
+
+class Game {
+    - Board* board
+    - IDice* dice
+    - deque<Player*> players
+    + Game(Board* b, IDice* d, vector<Player*> p)
+    + void start()
+}
+
+Game *-- Board
+Game *-- IDice
+Game o-- Player
+Board *-- Cell
+Cell o-- IJumper
+
+@enduml
